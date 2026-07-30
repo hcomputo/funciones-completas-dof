@@ -1,146 +1,312 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Página en construcción</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg-primary: #0f1419;
-    --bg-secondary: #1a2332;
-    --bg-card: #1e2a3a;
-    --accent: #c9a227;
-    --accent-light: #e8c547;
-    --text-primary: #f0f4f8;
-    --text-secondary: #a0aec0;
-    --border: #2d3a4d;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOF Buscador – Guía de Funciones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a2332;
+            --bg-card: #1e2a3a;
+            --bg-hover: #253447;
+            --accent: #c9a227;
+            --accent-light: #e8c547;
+            --text-primary: #f0f4f8;
+            --text-secondary: #a0aec0;
+            --text-muted: #718096;
+            --border: #2d3a4d;
+            --whatsapp: #25d366;
+        }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    line-height: 1.6;
-  }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            animation: fadeIn 0.6s ease-out;
+        }
 
-  .card {
-    max-width: 560px;
-    width: 100%;
-    text-align: center;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 3.5rem 2.5rem;
-    animation: fadeIn 0.7s ease-out;
-  }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a2332 0%, #0f1419 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 2.8rem 1.5rem 2.2rem;
+            text-align: center;
+            position: relative;
+        }
 
-  .icon {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 1.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 50%;
-  }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
 
-  .icon svg {
-    width: 34px;
-    height: 34px;
-    stroke: var(--accent-light);
-  }
+        .logo {
+            width: 160px;
+            height: auto;
+            margin: 0 auto 1.2rem;
+            display: block;
+            filter: drop-shadow(0 6px 20px rgba(201, 162, 39, 0.35));
+        }
 
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: var(--text-primary);
-  }
+        .logo-divider {
+            width: 70px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 0 auto 1.3rem;
+        }
 
-  h1 span {
-    color: var(--accent-light);
-  }
+        .badge {
+            display: inline-block;
+            background: rgba(201, 162, 39, 0.15);
+            color: var(--accent);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            padding: 0.3rem 0.9rem;
+            border-radius: 50px;
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            margin-bottom: 0.9rem;
+        }
 
-  p {
-    color: var(--text-secondary);
-    font-size: 1.02rem;
-    margin-bottom: 1.75rem;
-  }
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
 
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(201, 162, 39, 0.12);
-    border: 1px solid rgba(201, 162, 39, 0.35);
-    color: var(--accent-light);
-    padding: 0.5rem 1.1rem;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
+        .header h1 span {
+            color: var(--accent);
+        }
 
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--accent-light);
-    animation: pulse 1.6s ease-in-out infinite;
-  }
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 580px;
+            margin: 0 auto;
+        }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-  }
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem;
+        }
 
-  footer {
-    margin-top: 2.5rem;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    opacity: 0.7;
-  }
-</style>
+        /* Section */
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.8rem 1.7rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.25s ease;
+        }
+
+        .section:hover {
+            border-color: rgba(201, 162, 39, 0.35);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            margin-bottom: 0.9rem;
+            font-size: 0.98rem;
+        }
+
+        .section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section ul li {
+            position: relative;
+            padding-left: 1.4rem;
+            margin-bottom: 0.55rem;
+            color: var(--text-secondary);
+            font-size: 0.97rem;
+        }
+
+        .section ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Highlight box */
+        .highlight {
+            background: linear-gradient(145deg, #1a3229 0%, #152820 100%);
+            border: 1px solid rgba(37, 211, 102, 0.25);
+            border-radius: 14px;
+            padding: 1.5rem 1.6rem;
+            margin: 2rem 0;
+        }
+
+        .highlight h3 {
+            color: #4ade80;
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .highlight p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer strong {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header {
+                padding: 2rem 1rem;
+            }
+            .section {
+                padding: 1.4rem 1.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <div class="icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2 2 7l10 5 10-5-10-5Z"></path>
-        <path d="M2 17l10 5 10-5"></path>
-        <path d="M2 12l10 5 10-5"></path>
-      </svg>
-    </div>
 
-    <h1>Información en <span>camino</span></h1>
-    <p>Estamos preparando esta página. Muy pronto encontrarás aquí todo el contenido.</p>
+    <!-- Header -->
+    <header class="header">
+        <img src="logo-kit.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+        <div class="logo-divider"></div>
+        <div class="badge">Guía de Funciones</div>
+        <h1>DOF <span>Buscador</span></h1>
+        <p>Herramienta profesional para la consulta y revisión del Diario Oficial del Gobierno del Estado de Yucatán</p>
+    </header>
 
-    <span class="badge"><span class="dot"></span> En construcción</span>
+    <main class="container">
 
-    <footer>Vuelve a visitarnos pronto.</footer>
-  </div>
+        <!-- Descripción -->
+        <div class="section">
+            <h2 class="section-title">📋 Descripción</h2>
+            <p>DOF Buscador es una herramienta diseñada para facilitar la consulta y revisión del Diario Oficial del Gobierno del Estado de Yucatán. El programa permite buscar nombres de personas, empresas, instituciones y números de expediente dentro de las publicaciones oficiales, evitando que el usuario tenga que revisar manualmente cada página del documento.</p>
+            <p>Además de localizar coincidencias, presenta de forma ordenada la información más relevante de cada publicación, como la autoridad que publica, el número de expediente, la fecha de audiencia, la fecha de publicación, la página del Diario Oficial y un extracto del texto relacionado.</p>
+        </div>
+
+        <!-- Finalidad -->
+        <div class="section">
+            <h2 class="section-title">🎯 Finalidad</h2>
+            <p>La finalidad de DOF Buscador es ayudar a identificar oportunamente publicaciones judiciales y administrativas que puedan ser relevantes para el usuario.</p>
+            <p>El programa busca reducir el tiempo dedicado a revisar extensos documentos en formato PDF, disminuir el riesgo de pasar por alto una publicación importante y facilitar el seguimiento de expedientes, personas o asuntos jurídicos de interés.</p>
+            <p>DOF Buscador funciona como una herramienta de apoyo para la revisión documental. Los resultados pueden consultarse inmediatamente, guardarse en el historial, exportarse en formato PDF y compartirse cuando el usuario lo considere necesario.</p>
+        </div>
+
+        <!-- A quién está dirigido -->
+        <div class="section">
+            <h2 class="section-title">👥 ¿A quién está dirigido?</h2>
+            <p>DOF Buscador está dirigido principalmente a:</p>
+            <ul>
+                <li>Abogados y despachos jurídicos</li>
+                <li>Pasantes y estudiantes de Derecho</li>
+                <li>Gestores y auxiliares jurídicos</li>
+                <li>Empresas que requieren dar seguimiento a procedimientos</li>
+                <li>Instituciones, asociaciones y profesionistas</li>
+                <li>Personas que necesitan revisar si su nombre o expediente aparece publicado en el Diario Oficial</li>
+            </ul>
+            <p style="margin-top: 1rem;">No es necesario contar con conocimientos de programación. Su interfaz fue diseñada para que cualquier usuario pueda configurar sus criterios de búsqueda y utilizar las funciones principales de manera sencilla.</p>
+        </div>
+
+        <!-- Beneficios -->
+        <div class="section">
+            <h2 class="section-title">✨ Beneficios de utilizar DOF Buscador</h2>
+            <p>DOF Buscador permite realizar en pocos minutos una revisión que manualmente podría requerir mucho más tiempo. El usuario puede registrar nombres o números de expediente y dejar que el programa localice las coincidencias dentro del Diario Oficial.</p>
+            <p>Entre sus principales beneficios se encuentran la rapidez de búsqueda, la presentación inmediata de resultados, la conservación del historial y la posibilidad de consultar nuevamente las publicaciones encontradas sin repetir todo el proceso.</p>
+            <p>También permite realizar búsquedas históricas por fecha, identificar datos relevantes dentro de cada publicación y conservar un registro organizado de las revisiones efectuadas.</p>
+        </div>
+
+        <!-- Ventajas -->
+        <div class="section">
+            <h2 class="section-title">⚡ Ventajas</h2>
+            <p>Una de sus principales ventajas es que no se limita a localizar una palabra aislada. Su sistema de búsqueda fue reforzado para reconocer nombres, apellidos, denominaciones y números de expediente dentro de distintos formatos de publicación.</p>
+            <p>Los resultados se presentan de manera clara y estructurada, indicando:</p>
+            <ul>
+                <li>Coincidencia encontrada</li>
+                <li>Personas relacionadas</li>
+                <li>Autoridad que publica</li>
+                <li>Número de expediente</li>
+                <li>Fecha de audiencia</li>
+                <li>Fecha de publicación</li>
+                <li>Página del Diario Oficial</li>
+                <li>Archivo revisado</li>
+                <li>Extracto de la notificación</li>
+            </ul>
+            <p style="margin-top: 1rem;">El programa también cuenta con historial de búsquedas, consulta de publicaciones anteriores, generación de documentos PDF, herramientas jurídicas complementarias y enlaces actualizables al calendario judicial, Bonus Pack y guía completa de funciones.</p>
+        </div>
+
+        <!-- Seguridad -->
+        <div class="section">
+            <h2 class="section-title">🔒 Seguridad y privacidad</h2>
+            <p>DOF Buscador ha sido desarrollado para funcionar de manera local en la computadora del usuario. El programa no recopila, registra ni envía información personal a servidores externos.</p>
+            <p>Los nombres configurados, expedientes, resultados, historial, documentos descargados y demás información generada durante su uso permanecen almacenados en la propia computadora. Estos datos solo se comparten cuando el usuario decide voluntariamente exportarlos, imprimirlos, enviarlos por correo o transferirlos mediante alguna de las funciones disponibles.</p>
+            <p>La configuración de correo es opcional. Cuando se utiliza, los datos permanecen guardados localmente y son empleados únicamente para realizar los envíos solicitados por el usuario.</p>
+            <p>La versión distribuida de DOF Buscador se entrega limpia, sin nombres, historiales, correos, licencias ni documentos pertenecientes a otros usuarios. Asimismo, el instalador ha sido generado exclusivamente con los archivos necesarios para el funcionamiento del programa y verificado antes de su distribución.</p>
+        </div>
+
+        <!-- Highlight -->
+        <div class="highlight">
+            <h3>📌 Nota importante</h3>
+            <p>Esta es la página principal de la guía. En las siguientes páginas se detallarán una por una todas las funciones del programa.</p>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p><strong>DOF Buscador</strong> · Guía de Funciones</p>
+        <p style="margin-top: 0.4rem;">Material exclusivo para usuarios del programa</p>
+    </footer>
+
 </body>
 </html>
