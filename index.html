@@ -205,6 +205,59 @@
             color: var(--accent);
         }
 
+        /* Subsections within Funciones */
+        .subsection-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin: 1.8rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .subsection-title:first-of-type {
+            margin-top: 0;
+        }
+
+        /* Numbered function list */
+        .numbered-list {
+            list-style: none;
+            padding: 0;
+            counter-reset: fn;
+        }
+
+        .numbered-list li {
+            counter-increment: fn;
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 0.85rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .numbered-list li::before {
+            content: counter(fn);
+            position: absolute;
+            left: 0;
+            top: 0.05rem;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: rgba(201, 162, 39, 0.14);
+            border: 1px solid rgba(201, 162, 39, 0.4);
+            border-radius: 50%;
+            color: var(--accent-light);
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .numbered-list li strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .header {
@@ -298,10 +351,102 @@
             <p>La versión distribuida de DOF Buscador se entrega limpia, sin nombres, historiales, correos, licencias ni documentos pertenecientes a otros usuarios. Asimismo, el instalador ha sido generado exclusivamente con los archivos necesarios para el funcionamiento del programa y verificado antes de su distribución.</p>
         </div>
 
-        <!-- Highlight -->
-        <div class="highlight">
-            <h3>📌 Nota importante</h3>
-            <p>Esta es la página principal de la guía. En las siguientes páginas se detallarán una por una todas las funciones del programa.</p>
+        <!-- Funciones -->
+        <div class="section">
+            <h2 class="section-title">🛠️ Estas son las funciones que hace el programa</h2>
+            <p>A continuación se detalla, de manera organizada, cada una de las funciones que integran DOF Buscador:</p>
+
+            <h3 class="subsection-title">🔎 Búsqueda y criterios</h3>
+            <ol class="numbered-list">
+                <li><strong>Búsqueda del Diario Oficial del día.</strong> Descarga y revisa las ediciones disponibles del Diario Oficial del Gobierno del Estado de Yucatán correspondientes a la fecha actual.</li>
+                <li><strong>Búsqueda por fecha anterior.</strong> Permite seleccionar una fecha específica para revisar publicaciones históricas del Diario Oficial.</li>
+                <li><strong>Búsqueda de nombres completos.</strong> Localiza nombres de personas dentro de las publicaciones oficiales, aun cuando aparezcan acompañados de otros nombres o datos jurídicos.</li>
+                <li><strong>Búsqueda por apellidos o partes del nombre.</strong> Permite configurar criterios más breves, como uno o varios apellidos, para localizar posibles coincidencias.</li>
+                <li><strong>Búsqueda de empresas, instituciones y denominaciones.</strong> Puede buscar nombres de bancos, sociedades, dependencias, asociaciones y otras personas morales.</li>
+                <li><strong>Búsqueda por número de expediente.</strong> Localiza números de expediente dentro del Diario Oficial, incluyendo formatos como 450/2025 o 00819/2023.</li>
+                <li><strong>Búsqueda mediante varios criterios.</strong> Permite registrar simultáneamente distintos nombres, empresas y números de expediente para revisarlos en una sola ejecución.</li>
+                <li><strong>Administración de criterios de búsqueda.</strong> El usuario puede agregar, consultar y eliminar nombres o expedientes sin editar archivos manualmente.</li>
+                <li><strong>Detección reforzada de coincidencias.</strong> El sistema considera diferencias de mayúsculas, minúsculas, acentos y distintos formatos de publicación.</li>
+                <li><strong>Revisión de varias ediciones de una misma fecha.</strong> Si el Diario Oficial publica más de una edición, el programa puede revisarlas dentro del mismo proceso.</li>
+            </ol>
+
+            <h3 class="subsection-title">📄 Resultados e identificación de información</h3>
+            <ol class="numbered-list">
+                <li><strong>Presentación inmediata de resultados.</strong> Al terminar la búsqueda, muestra directamente las coincidencias encontradas sin obligar al usuario a abrir otra sección.</li>
+                <li><strong>Identificación de la coincidencia localizada.</strong> Indica claramente qué nombre, denominación o número de expediente fue encontrado.</li>
+                <li><strong>Identificación de personas relacionadas.</strong> Muestra los nombres de otras personas que aparecen vinculadas dentro del mismo extracto.</li>
+                <li><strong>Identificación de la autoridad que publica.</strong> Detecta el juzgado, tribunal, sala o autoridad responsable de la publicación.</li>
+                <li><strong>Identificación del número de expediente.</strong> Extrae y presenta el expediente relacionado con la coincidencia.</li>
+                <li><strong>Detección de otros números judiciales.</strong> Puede identificar datos como toca, exhorto, amparo, expediente auxiliar, expedientillo o acumulado cuando aparecen en la publicación.</li>
+                <li><strong>Identificación de la fecha de audiencia.</strong> Localiza y muestra la fecha de audiencia señalada en la notificación.</li>
+                <li><strong>Identificación de la fecha de publicación.</strong> Presenta la fecha exacta del Diario Oficial revisado.</li>
+                <li><strong>Identificación de la página.</strong> Indica el número de página del PDF donde se encontró la coincidencia.</li>
+                <li><strong>Identificación del archivo revisado.</strong> Muestra el nombre del PDF del Diario Oficial en el que se localizó el resultado.</li>
+                <li><strong>Generación de extractos de la notificación.</strong> Presenta un fragmento amplio del texto relacionado para facilitar su revisión jurídica.</li>
+            </ol>
+
+            <h3 class="subsection-title">🗂️ Historial y gestión de resultados</h3>
+            <ol class="numbered-list">
+                <li><strong>Historial de ejecuciones.</strong> Conserva un registro de las búsquedas realizadas, con fecha, hora, Diario revisado, coincidencias y estado del correo.</li>
+                <li><strong>Consulta de detalles del historial.</strong> Permite seleccionar una ejecución anterior y revisar nuevamente todos sus resultados.</li>
+                <li><strong>Eliminación individual del historial.</strong> El usuario puede seleccionar y eliminar únicamente el registro que desee, sin borrar el resto.</li>
+                <li><strong>Conservación local de resultados.</strong> Los resultados permanecen guardados en la computadora para consultarlos posteriormente.</li>
+                <li><strong>Generación de historial en PDF.</strong> Permite guardar los resultados o el historial en formato PDF.</li>
+                <li><strong>Impresión de resultados.</strong> Los documentos generados pueden abrirse e imprimirse cuando sea necesario.</li>
+            </ol>
+
+            <h3 class="subsection-title">✉️ Correo electrónico</h3>
+            <ol class="numbered-list">
+                <li><strong>Configuración opcional de correo.</strong> El programa funciona normalmente aunque el usuario no configure una cuenta de correo.</li>
+                <li><strong>Compatibilidad con Gmail.</strong> Permite configurar cuentas de Gmail mediante contraseña de aplicación.</li>
+                <li><strong>Compatibilidad con Outlook y Hotmail.</strong> Incluye configuración automática e instrucciones para utilizar estos proveedores.</li>
+                <li><strong>Guardado independiente del correo remitente.</strong> El botón Guardar remitente conserva únicamente la cuenta, el proveedor y la contraseña de aplicación.</li>
+                <li><strong>Administración independiente de destinatarios.</strong> Los destinatarios se agregan, eliminan y guardan mediante sus propios botones.</li>
+                <li><strong>Envío a varios destinatarios.</strong> Los resultados pueden enviarse automáticamente a todas las direcciones registradas.</li>
+                <li><strong>Envío de correo de prueba.</strong> Permite comprobar que el remitente, la contraseña y el servidor estén configurados correctamente.</li>
+                <li><strong>Eliminación completa del correo remitente.</strong> El botón Eliminar correo remitente borra la cuenta, la contraseña guardada y los destinatarios asociados.</li>
+                <li><strong>Almacenamiento seguro de la contraseña.</strong> La contraseña del correo se guarda mediante las Credenciales de Windows y no como texto visible dentro del programa.</li>
+                <li><strong>Funcionamiento sin correo.</strong> Cuando el correo no está configurado, la búsqueda se realiza y los resultados se conservan en el historial.</li>
+            </ol>
+
+            <h3 class="subsection-title">📅 Calendario y legislación</h3>
+            <ol class="numbered-list">
+                <li><strong>Calendario judicial.</strong> Abre el calendario de suspensión de labores en el navegador sin descargarlo automáticamente.</li>
+                <li><strong>Consulta de Legislación de Yucatán.</strong> Incluye Constitución Política, leyes, códigos y reglamentos expedidos por el Congreso del Estado.</li>
+                <li><strong>Búsqueda general dentro de la legislación.</strong> El buscador revisa simultáneamente las cuatro secciones para localizar una disposición.</li>
+                <li><strong>Visualización de información legislativa.</strong> Muestra decreto, fecha de publicación, última reforma, estado y disponibilidad del PDF.</li>
+                <li><strong>Eliminación de registros legislativos duplicados.</strong> Detecta títulos similares y conserva el registro oficial más completo.</li>
+                <li><strong>Apertura del PDF oficial de una ley.</strong> Permite abrir directamente el documento publicado por el Congreso cuando el enlace está disponible.</li>
+                <li><strong>Acceso a la página oficial de legislación.</strong> El usuario puede abrir la sección correspondiente del Congreso para realizar consultas adicionales.</li>
+                <li><strong>Acceso al catálogo oficial.</strong> Incluye un botón para entrar directamente al catálogo completo de disposiciones.</li>
+                <li><strong>Respaldo cuando no existe enlace directo al PDF.</strong> Si el portal no proporciona el vínculo, abre el catálogo oficial y copia el nombre de la disposición para facilitar la búsqueda.</li>
+            </ol>
+
+            <h3 class="subsection-title">🧰 Herramientas complementarias</h3>
+            <ol class="numbered-list">
+                <li><strong>Bonus Pack o Kit Jurídico.</strong> Abre una página con formatos, modelos y recursos jurídicos complementarios.</li>
+                <li><strong>Página de funciones completas.</strong> El logotipo de la pantalla principal abre una guía en línea con la explicación detallada del programa.</li>
+                <li><strong>Sección de créditos.</strong> Incluye un acceso visible a la información de autoría y desarrollo.</li>
+                <li><strong>Ventana Acerca de.</strong> Presenta información general sobre el programa, su finalidad y sus características.</li>
+            </ol>
+
+            <h3 class="subsection-title">🔐 Instalación, privacidad y seguridad</h3>
+            <ol class="numbered-list">
+                <li><strong>Sistema de activación por licencia.</strong> Solicita una licencia válida para habilitar el uso del programa en cada computadora.</li>
+                <li><strong>Instalación independiente.</strong> El usuario no necesita instalar Python, Visual Studio Code ni otras herramientas de desarrollo.</li>
+                <li><strong>Instalador limpio.</strong> Se distribuye sin nombres, historial, correos, contraseñas, licencias, expedientes ni PDF de otros usuarios.</li>
+                <li><strong>Privacidad local.</strong> Los nombres, expedientes, resultados, historial y configuraciones permanecen en la computadora del usuario.</li>
+                <li><strong>Sin recopilación de información personal.</strong> El programa no recopila ni envía datos del usuario a servidores propios.</li>
+                <li><strong>Control del usuario sobre sus datos.</strong> La información solo se comparte cuando el usuario decide enviarla, exportarla, imprimirla o copiarla.</li>
+                <li><strong>Actualización externa de contenidos.</strong> El calendario, el Bonus Pack y la página de funciones pueden actualizarse en GitHub sin modificar el instalador.</li>
+            </ol>
+
+            <h3 class="subsection-title">🖥️ Interfaz</h3>
+            <ol class="numbered-list">
+                <li><strong>Interfaz sencilla y organizada.</strong> Las funciones principales se encuentran separadas en botones y ventanas claramente identificadas.</li>
+                <li><strong>Estado de la búsqueda en pantalla.</strong> Muestra si el programa está listo, cuántos criterios están activos, cuántos expedientes se encuentran configurados y el estado del PDF.</li>
+                <li><strong>Mensajes claros de finalización.</strong> Informa si la búsqueda terminó correctamente, si encontró coincidencias y si el correo fue enviado o no estaba configurado.</li>
+            </ol>
         </div>
 
     </main>
