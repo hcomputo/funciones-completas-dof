@@ -1,460 +1,711 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOF Buscador – Guía de Funciones</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-primary: #0f1419;
-            --bg-secondary: #1a2332;
-            --bg-card: #1e2a3a;
-            --bg-hover: #253447;
-            --accent: #c9a227;
-            --accent-light: #e8c547;
-            --text-primary: #f0f4f8;
-            --text-secondary: #a0aec0;
-            --text-muted: #718096;
-            --border: #2d3a4d;
-            --whatsapp: #25d366;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOF Buscador · Guía de Funciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --noche: #0b1120;
+    --noche-2: #111a2e;
+    --panel: #16213c;
+    --panel-2: #1c2b4a;
+    --cyan: #38e1c4;
+    --cyan-soft: #6ff0da;
+    --ambar: #ffb84d;
+    --azul-luz: #4f8cff;
+    --texto: #eef3fb;
+    --texto-2: #9fb0c9;
+    --texto-3: #6b7d99;
+    --linea: rgba(120,150,200,0.14);
+    --wa: #25d366;
+  }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            min-height: 100vh;
-            animation: fadeIn 0.6s ease-out;
-        }
+  html { scroll-behavior: smooth; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+  body {
+    font-family: 'Instrument Sans', system-ui, sans-serif;
+    background: var(--noche);
+    color: var(--texto);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
 
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #1a2332 0%, #0f1419 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 2.8rem 1.5rem 2.2rem;
-            text-align: center;
-            position: relative;
-        }
+  /* Fondo con brillos */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(700px circle at 15% 0%, rgba(56,225,196,0.10), transparent 55%),
+      radial-gradient(600px circle at 90% 15%, rgba(79,140,255,0.10), transparent 50%),
+      radial-gradient(800px circle at 50% 110%, rgba(255,184,77,0.06), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        }
+  .wrap { position: relative; z-index: 1; }
 
-        .logo {
-            width: 160px;
-            height: auto;
-            margin: 0 auto 1.2rem;
-            display: block;
-            filter: drop-shadow(0 6px 20px rgba(201, 162, 39, 0.35));
-        }
+  /* ===== HERO ===== */
+  .hero {
+    text-align: center;
+    padding: 64px 22px 30px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
 
-        .logo-divider {
-            width: 70px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            margin: 0 auto 1.3rem;
-        }
+  .escudo {
+    width: 84px; height: 84px;
+    margin: 0 auto 22px;
+    border-radius: 22px;
+    background: linear-gradient(145deg, var(--panel-2), var(--noche-2));
+    border: 1px solid rgba(56,225,196,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif; font-weight: 800; font-size: 24px;
+    letter-spacing: 1px; color: var(--cyan);
+    box-shadow: 0 0 40px rgba(56,225,196,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
 
-        .badge {
-            display: inline-block;
-            background: rgba(201, 162, 39, 0.15);
-            color: var(--accent);
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 1.4px;
-            text-transform: uppercase;
-            padding: 0.3rem 0.9rem;
-            border-radius: 50px;
-            border: 1px solid rgba(201, 162, 39, 0.3);
-            margin-bottom: 0.9rem;
-        }
+  .eyebrow {
+    display: inline-block;
+    font-size: 11.5px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 3px;
+    color: var(--cyan);
+    padding: 6px 16px;
+    border: 1px solid rgba(56,225,196,0.3);
+    border-radius: 100px;
+    margin-bottom: 20px;
+    background: rgba(56,225,196,0.06);
+  }
 
-        .header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.7rem, 4.5vw, 2.4rem);
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-        }
+  .hero h1 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 6vw, 3.1rem);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(100deg, var(--cyan), var(--azul-luz));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-        .header h1 span {
-            color: var(--accent);
-        }
+  .hero p {
+    color: var(--texto-2);
+    font-size: 1.05rem;
+    max-width: 560px;
+    margin: 0 auto 30px;
+  }
 
-        .header p {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            max-width: 580px;
-            margin: 0 auto;
-        }
+  .cta-descargar {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(100deg, var(--cyan), var(--azul-luz));
+    color: #05121f;
+    font-weight: 700; font-size: 15px;
+    padding: 14px 26px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 12px 30px rgba(56,225,196,0.3);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .cta-descargar:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(56,225,196,0.42); }
 
-        /* Container */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2.5rem 1.5rem 4rem;
-        }
+  /* ===== NAV DE CATEGORIAS (tarjetas) ===== */
+  .grid-cat {
+    max-width: 980px;
+    margin: 34px auto 0;
+    padding: 0 22px 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 16px;
+  }
 
-        /* Section */
-        .section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.8rem 1.7rem;
-            margin-bottom: 1.5rem;
-            transition: border-color 0.25s ease;
-        }
+  .cat {
+    text-align: left;
+    background: linear-gradient(160deg, var(--panel), var(--noche-2));
+    border: 1px solid var(--linea);
+    border-radius: 18px;
+    padding: 22px 20px;
+    cursor: pointer;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+    color: inherit;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .cat::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(300px circle at 100% 0%, rgba(56,225,196,0.12), transparent 60%);
+    opacity: 0; transition: opacity .25s ease;
+  }
+  .cat:hover { transform: translateY(-4px); border-color: rgba(56,225,196,0.4); box-shadow: 0 16px 34px rgba(0,0,0,0.35); }
+  .cat:hover::after { opacity: 1; }
 
-        .section:hover {
-            border-color: rgba(201, 162, 39, 0.35);
-        }
+  .cat .ico {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    background: rgba(56,225,196,0.1);
+    border: 1px solid rgba(56,225,196,0.22);
+  }
+  .cat h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.02rem; font-weight: 600;
+    color: var(--texto);
+  }
+  .cat p {
+    font-size: 0.86rem;
+    color: var(--texto-3);
+    line-height: 1.5;
+  }
+  .cat .flecha {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: var(--cyan);
+    font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+    transition: gap .2s ease;
+  }
+  .cat:hover .flecha { gap: 12px; }
 
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.35rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
+  /* ===== SECCIONES DE DETALLE ===== */
+  .detalle {
+    display: none;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 22px 60px;
+    animation: subir .5s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .detalle.activa { display: block; }
 
-        .section p {
-            color: var(--text-secondary);
-            margin-bottom: 0.9rem;
-            font-size: 0.98rem;
-        }
+  @keyframes subir { from { opacity:0; transform: translateY(20px);} to {opacity:1; transform:translateY(0);} }
 
-        .section p:last-child {
-            margin-bottom: 0;
-        }
+  .volver {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    color: var(--texto-2);
+    font-family: inherit; font-size: 14px; font-weight: 500;
+    padding: 10px 18px; border-radius: 100px;
+    cursor: pointer; margin-bottom: 26px;
+    transition: background .18s ease, color .18s ease, transform .18s ease;
+  }
+  .volver:hover { background: var(--panel-2); color: var(--texto); transform: translateX(-3px); }
 
-        .section ul {
-            list-style: none;
-            padding: 0;
-        }
+  .detalle-head {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 10px;
+  }
+  .detalle-head .ico-big {
+    width: 56px; height: 56px; flex-shrink: 0;
+    border-radius: 14px; font-size: 27px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(56,225,196,0.1);
+    border: 1px solid rgba(56,225,196,0.25);
+  }
+  .detalle-head h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .detalle-intro {
+    color: var(--texto-2);
+    font-size: 1rem;
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--linea);
+  }
 
-        .section ul li {
-            position: relative;
-            padding-left: 1.4rem;
-            margin-bottom: 0.55rem;
-            color: var(--text-secondary);
-            font-size: 0.97rem;
-        }
+  .detalle p { color: var(--texto-2); margin-bottom: 14px; }
+  .detalle p:last-child { margin-bottom: 0; }
 
-        .section ul li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: 600;
-        }
+  .detalle a.inline {
+    color: var(--cyan); font-weight: 600; text-decoration: none;
+    border-bottom: 1px solid rgba(56,225,196,0.4);
+  }
+  .detalle a.inline:hover { color: var(--cyan-soft); }
 
-        /* Highlight box */
-        .highlight {
-            background: linear-gradient(145deg, #1a3229 0%, #152820 100%);
-            border: 1px solid rgba(37, 211, 102, 0.25);
-            border-radius: 14px;
-            padding: 1.5rem 1.6rem;
-            margin: 2rem 0;
-        }
+  /* sub-bloques */
+  .bloque { margin-bottom: 34px; }
+  .bloque:last-child { margin-bottom: 0; }
+  .bloque h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.12rem; font-weight: 600;
+    color: var(--cyan-soft);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .bloque h3 .tag {
+    font-size: 20px;
+  }
 
-        .highlight h3 {
-            color: #4ade80;
-            font-size: 1.1rem;
-            margin-bottom: 0.6rem;
-        }
+  /* lista simple */
+  ul.simple { list-style: none; }
+  ul.simple li {
+    position: relative; padding-left: 24px; margin-bottom: 10px;
+    color: var(--texto-2); font-size: 0.97rem;
+  }
+  ul.simple li::before {
+    content: "";
+    position: absolute; left: 2px; top: 11px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 8px rgba(56,225,196,0.6);
+  }
 
-        .highlight p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin: 0;
-        }
+  /* lista numerada de funciones */
+  ol.fn { list-style: none; counter-reset: n; }
+  ol.fn li {
+    counter-increment: n;
+    position: relative;
+    padding: 14px 16px 14px 52px;
+    margin-bottom: 10px;
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    font-size: 0.94rem; color: var(--texto-2);
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  ol.fn li:hover { border-color: rgba(56,225,196,0.3); transform: translateX(3px); }
+  ol.fn li::before {
+    content: counter(n);
+    position: absolute; left: 14px; top: 13px;
+    width: 26px; height: 26px;
+    background: linear-gradient(140deg, rgba(56,225,196,0.18), rgba(79,140,255,0.12));
+    border: 1px solid rgba(56,225,196,0.35);
+    border-radius: 8px;
+    color: var(--cyan-soft);
+    font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.fn li strong { color: var(--texto); font-weight: 600; }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem 1.5rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
+  /* caja destacada */
+  .nota {
+    background: linear-gradient(150deg, rgba(37,211,102,0.08), rgba(56,225,196,0.05));
+    border: 1px solid rgba(37,211,102,0.28);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 22px 0;
+  }
+  .nota strong { color: var(--wa); }
 
-        .footer strong {
-            color: var(--accent);
-        }
+  /* ===== BLOQUE DE CONTACTO ===== */
+  .contacto-cta {
+    max-width: 620px;
+    margin: 30px auto 0;
+    padding: 0 22px;
+    text-align: center;
+  }
+  .contacto-cta .linea-deco {
+    width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    margin: 0 auto 22px;
+  }
+  .contacto-cta h4 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--texto);
+    margin-bottom: 6px;
+  }
+  .contacto-cta p {
+    color: var(--texto-3);
+    font-size: 0.9rem;
+    margin-bottom: 18px;
+  }
+  .btn-contacto {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(56,225,196,0.08);
+    border: 1px solid rgba(56,225,196,0.35);
+    color: var(--cyan-soft);
+    font-family: 'Sora', sans-serif; font-weight: 600; font-size: 14.5px;
+    padding: 11px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-contacto:hover {
+    background: rgba(56,225,196,0.16);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(56,225,196,0.22);
+  }
+  .btn-contacto svg { display: block; }
 
-        /* Subsections within Funciones */
-        .subsection-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--accent-light);
-            margin: 1.8rem 0 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border);
-        }
+  /* botón contacto pequeño dentro de detalles */
+  .contacto-mini {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 34px;
+    background: rgba(56,225,196,0.06);
+    border: 1px solid rgba(56,225,196,0.28);
+    color: var(--cyan-soft);
+    font-family: 'Sora', sans-serif; font-weight: 600; font-size: 13.5px;
+    padding: 10px 20px; border-radius: 100px;
+    text-decoration: none;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .contacto-mini:hover { background: rgba(56,225,196,0.14); transform: translateY(-2px); }
 
-        .subsection-title:first-of-type {
-            margin-top: 0;
-        }
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding: 40px 22px;
+    border-top: 1px solid var(--linea);
+    color: var(--texto-3);
+    font-size: 0.85rem;
+    max-width: 900px; margin: 0 auto;
+  }
+  .footer strong { color: var(--cyan); font-family: 'Sora', sans-serif; }
+  .footer .mini { margin-top: 6px; font-size: 0.78rem; color: var(--texto-3); }
 
-        /* Numbered function list */
-        .numbered-list {
-            list-style: none;
-            padding: 0;
-            counter-reset: fn;
-        }
-
-        .numbered-list li {
-            counter-increment: fn;
-            position: relative;
-            padding-left: 2.5rem;
-            margin-bottom: 0.85rem;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-
-        .numbered-list li::before {
-            content: counter(fn);
-            position: absolute;
-            left: 0;
-            top: 0.05rem;
-            width: 1.6rem;
-            height: 1.6rem;
-            background: rgba(201, 162, 39, 0.14);
-            border: 1px solid rgba(201, 162, 39, 0.4);
-            border-radius: 50%;
-            color: var(--accent-light);
-            font-size: 0.72rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .numbered-list li strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .header {
-                padding: 2rem 1rem;
-            }
-            .section {
-                padding: 1.4rem 1.2rem;
-            }
-        }
-    </style>
+  @media (max-width: 560px) {
+    .hero { padding: 44px 18px 20px; }
+    .grid-cat { grid-template-columns: 1fr; gap: 12px; }
+    ol.fn li { padding-left: 48px; }
+  }
+</style>
 </head>
 <body>
+<div class="wrap">
 
-    <!-- Header -->
-    <header class="header">
-        <img src="logo-kit.png" alt="Logo" class="logo" onerror="this.style.display='none'">
-        <div class="logo-divider"></div>
-        <div class="badge">Guía de Funciones</div>
-        <h1>DOF <span>Buscador</span></h1>
-        <p>Herramienta profesional para la consulta y revisión del Diario Oficial del Gobierno del Estado de Yucatán</p>
-    </header>
+  <!-- ================= VISTA PRINCIPAL ================= -->
+  <div id="inicio">
+    <section class="hero">
+      <div class="escudo">DOF</div>
+      <span class="eyebrow">Guía de Funciones</span>
+      <h1>DOF <span class="grad">Buscador</span></h1>
+      <p>Consulta y revisión del Diario Oficial del Gobierno del Estado de Yucatán, con herramientas jurídicas para tu práctica profesional.</p>
+      <a class="cta-descargar" href="https://hcomputo.github.io/Instalador-dof-buscador/" target="_blank" rel="noopener">
+        ⬇ Descargar e instalar
+      </a>
+    </section>
 
-    <main class="container">
+    <!-- Tarjetas de categorías -->
+    <div class="grid-cat">
+      <button class="cat" onclick="abrir('acerca')">
+        <div class="ico">📋</div>
+        <h3>Acerca del programa</h3>
+        <p>Qué es, para qué sirve y a quién está dirigido.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
 
-        <!-- Descripción -->
-        <div class="section">
-            <h2 class="section-title">📋 Descripción</h2>
-            <p>DOF Buscador es una herramienta diseñada para facilitar la consulta y revisión del Diario Oficial del Gobierno del Estado de Yucatán. El programa permite buscar nombres de personas, empresas, instituciones y números de expediente dentro de las publicaciones oficiales, evitando que el usuario tenga que revisar manualmente cada página del documento.</p>
-            <p>Sus búsquedas son 100% confiables: puedes localizar información por el nombre de tus clientes o, para mayor precisión, por número de expediente. Cada resultado se presenta de forma ordenada, mostrando la información más relevante de la publicación, como la autoridad que publica, el número de expediente, la fecha de audiencia, la fecha de publicación, la página del Diario Oficial y un extracto del texto relacionado.</p>
-            <p>Además, desde el propio programa puedes consultar y descargar cualquier ley, código, reglamento o decreto federal y estatal, así como revisar criterios de jurisprudencia y tesis necesarios para fundamentar correctamente tus demandas, contestaciones, recursos o cualquier otro escrito. Cuentas también con la herramienta de Expedientes, que concentra en un solo lugar la información que normalmente tendrías en tus archivos físicos, acceso a más de 10,000 formatos jurídicos organizados por categoría, y un calendario jurídico que te avisará en la fecha y hora exacta de tus citas y audiencias.</p>
-            <p>Aprovecha esta oportunidad de modernizar y actualizar tu despacho con una herramienta que, sin duda, te será de gran utilidad.</p>
-            <p style="margin-top: 1.3rem;"><a href="https://hcomputo.github.io/Instalador-dof-buscador/" style="color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(201,162,39,0.4);">Da clic en este enlace para descargar e instalar</a>, si aún no lo has hecho.</p>
-        </div>
+      <button class="cat" onclick="abrir('beneficios')">
+        <div class="ico">✨</div>
+        <h3>Beneficios y ventajas</h3>
+        <p>Por qué DOF Buscador ahorra tiempo y mejora tu trabajo.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
 
-        <!-- Finalidad -->
-        <div class="section">
-            <h2 class="section-title">🎯 Finalidad</h2>
-            <p>La finalidad de DOF Buscador es ayudar a identificar oportunamente publicaciones judiciales y administrativas que puedan ser relevantes para el usuario.</p>
-            <p>El programa busca reducir el tiempo dedicado a revisar extensos documentos en formato PDF, disminuir el riesgo de pasar por alto una publicación importante y facilitar el seguimiento de expedientes, personas o asuntos jurídicos de interés.</p>
-            <p>DOF Buscador funciona como una herramienta de apoyo para la revisión documental. Los resultados pueden consultarse inmediatamente, guardarse en el historial, exportarse en formato PDF y compartirse cuando el usuario lo considere necesario.</p>
-        </div>
+      <button class="cat" onclick="abrir('busqueda')">
+        <div class="ico">🔎</div>
+        <h3>Búsqueda y criterios</h3>
+        <p>Cómo localiza nombres, empresas y expedientes.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
 
-        <!-- A quién está dirigido -->
-        <div class="section">
-            <h2 class="section-title">👥 ¿A quién está dirigido?</h2>
-            <p>DOF Buscador está dirigido principalmente a:</p>
-            <ul>
-                <li>Abogados y despachos jurídicos</li>
-                <li>Pasantes y estudiantes de Derecho</li>
-                <li>Gestores y auxiliares jurídicos</li>
-                <li>Empresas que requieren dar seguimiento a procedimientos</li>
-                <li>Instituciones, asociaciones y profesionistas</li>
-                <li>Personas que necesitan revisar si su nombre o expediente aparece publicado en el Diario Oficial</li>
-            </ul>
-            <p style="margin-top: 1rem;">No es necesario contar con conocimientos de programación. Su interfaz fue diseñada para que cualquier usuario pueda configurar sus criterios de búsqueda y utilizar las funciones principales de manera sencilla.</p>
-        </div>
+      <button class="cat" onclick="abrir('resultados')">
+        <div class="ico">📄</div>
+        <h3>Resultados</h3>
+        <p>La información que identifica en cada coincidencia.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
 
-        <!-- Beneficios -->
-        <div class="section">
-            <h2 class="section-title">✨ Beneficios de utilizar DOF Buscador</h2>
-            <p>DOF Buscador permite realizar en pocos minutos una revisión que manualmente podría requerir mucho más tiempo. El usuario puede registrar nombres o números de expediente y dejar que el programa localice las coincidencias dentro del Diario Oficial.</p>
-            <p>Entre sus principales beneficios se encuentran la rapidez de búsqueda, la presentación inmediata de resultados, la conservación del historial y la posibilidad de consultar nuevamente las publicaciones encontradas sin repetir todo el proceso.</p>
-            <p>También permite realizar búsquedas históricas por fecha, identificar datos relevantes dentro de cada publicación y conservar un registro organizado de las revisiones efectuadas.</p>
-        </div>
+      <button class="cat" onclick="abrir('historial')">
+        <div class="ico">🗂️</div>
+        <h3>Historial y gestión</h3>
+        <p>Guarda, consulta e imprime tus búsquedas.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
 
-        <!-- Ventajas -->
-        <div class="section">
-            <h2 class="section-title">⚡ Ventajas</h2>
-            <p>Una de sus principales ventajas es que no se limita a localizar una palabra aislada. Su sistema de búsqueda fue reforzado para reconocer nombres, apellidos, denominaciones y números de expediente dentro de distintos formatos de publicación.</p>
-            <p>Los resultados se presentan de manera clara y estructurada, indicando:</p>
-            <ul>
-                <li>Coincidencia encontrada</li>
-                <li>Personas relacionadas</li>
-                <li>Autoridad que publica</li>
-                <li>Número de expediente</li>
-                <li>Fecha de audiencia</li>
-                <li>Fecha de publicación</li>
-                <li>Página del Diario Oficial</li>
-                <li>Archivo revisado</li>
-                <li>Extracto de la notificación</li>
-            </ul>
-            <p style="margin-top: 1rem;">El programa también cuenta con historial de búsquedas, consulta de publicaciones anteriores, generación de documentos PDF, herramientas jurídicas complementarias y enlaces actualizables al calendario judicial, Bonus Pack y guía completa de funciones.</p>
-        </div>
+      <button class="cat" onclick="abrir('correo')">
+        <div class="ico">✉️</div>
+        <h3>Correo electrónico</h3>
+        <p>Envío automático de resultados por email.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
 
-        <!-- Seguridad -->
-        <div class="section">
-            <h2 class="section-title">🔒 Seguridad y privacidad</h2>
-            <p>DOF Buscador ha sido desarrollado para funcionar de manera local en la computadora del usuario. El programa no recopila, registra ni envía información personal a servidores externos.</p>
-            <p>Los nombres configurados, expedientes, resultados, historial, documentos descargados y demás información generada durante su uso permanecen almacenados en la propia computadora. Estos datos solo se comparten cuando el usuario decide voluntariamente exportarlos, imprimirlos, enviarlos por correo o transferirlos mediante alguna de las funciones disponibles.</p>
-            <p>La configuración de correo es opcional. Cuando se utiliza, los datos permanecen guardados localmente y son empleados únicamente para realizar los envíos solicitados por el usuario.</p>
-            <p>La versión distribuida de DOF Buscador se entrega limpia, sin nombres, historiales, correos, licencias ni documentos pertenecientes a otros usuarios. Asimismo, el instalador ha sido generado exclusivamente con los archivos necesarios para el funcionamiento del programa y verificado antes de su distribución.</p>
-        </div>
+      <button class="cat" onclick="abrir('legislacion')">
+        <div class="ico">📅</div>
+        <h3>Calendario y legislación</h3>
+        <p>Leyes, códigos, jurisprudencia y calendario judicial.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
 
-        <!-- Funciones -->
-        <div class="section">
-            <h2 class="section-title">🛠️ Estas son las funciones que hace el programa</h2>
-            <p>A continuación se detalla, de manera organizada, cada una de las funciones que integran DOF Buscador:</p>
+      <button class="cat" onclick="abrir('herramientas')">
+        <div class="ico">🧰</div>
+        <h3>Herramientas jurídicas</h3>
+        <p>Bonus Pack, formatos y recursos complementarios.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
 
-            <h3 class="subsection-title">🔎 Búsqueda y criterios</h3>
-            <ol class="numbered-list">
-                <li><strong>Búsqueda del Diario Oficial del día.</strong> Descarga y revisa las ediciones disponibles del Diario Oficial del Gobierno del Estado de Yucatán correspondientes a la fecha actual.</li>
-                <li><strong>Búsqueda por fecha anterior.</strong> Permite seleccionar una fecha específica para revisar publicaciones históricas del Diario Oficial.</li>
-                <li><strong>Búsqueda de nombres completos.</strong> Localiza nombres de personas dentro de las publicaciones oficiales, aun cuando aparezcan acompañados de otros nombres o datos jurídicos.</li>
-                <li><strong>Búsqueda por apellidos o partes del nombre.</strong> Permite configurar criterios más breves, como uno o varios apellidos, para localizar posibles coincidencias.</li>
-                <li><strong>Búsqueda de empresas, instituciones y denominaciones.</strong> Puede buscar nombres de bancos, sociedades, dependencias, asociaciones y otras personas morales.</li>
-                <li><strong>Búsqueda por número de expediente.</strong> Localiza números de expediente dentro del Diario Oficial, incluyendo formatos como 450/2025 o 00819/2023.</li>
-                <li><strong>Búsqueda mediante varios criterios.</strong> Permite registrar simultáneamente distintos nombres, empresas y números de expediente para revisarlos en una sola ejecución.</li>
-                <li><strong>Administración de criterios de búsqueda.</strong> El usuario puede agregar, consultar y eliminar nombres o expedientes sin editar archivos manualmente.</li>
-                <li><strong>Detección reforzada de coincidencias.</strong> El sistema considera diferencias de mayúsculas, minúsculas, acentos y distintos formatos de publicación.</li>
-                <li><strong>Revisión de varias ediciones de una misma fecha.</strong> Si el Diario Oficial publica más de una edición, el programa puede revisarlas dentro del mismo proceso.</li>
-            </ol>
+      <button class="cat" onclick="abrir('seguridad')">
+        <div class="ico">🔐</div>
+        <h3>Seguridad y privacidad</h3>
+        <p>Tus datos permanecen en tu propia computadora.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
 
-            <h3 class="subsection-title">📄 Resultados e identificación de información</h3>
-            <ol class="numbered-list">
-                <li><strong>Presentación inmediata de resultados.</strong> Al terminar la búsqueda, muestra directamente las coincidencias encontradas sin obligar al usuario a abrir otra sección.</li>
-                <li><strong>Identificación de la coincidencia localizada.</strong> Indica claramente qué nombre, denominación o número de expediente fue encontrado.</li>
-                <li><strong>Identificación de personas relacionadas.</strong> Muestra los nombres de otras personas que aparecen vinculadas dentro del mismo extracto.</li>
-                <li><strong>Identificación de la autoridad que publica.</strong> Detecta el juzgado, tribunal, sala o autoridad responsable de la publicación.</li>
-                <li><strong>Identificación del número de expediente.</strong> Extrae y presenta el expediente relacionado con la coincidencia.</li>
-                <li><strong>Detección de otros números judiciales.</strong> Puede identificar datos como toca, exhorto, amparo, expediente auxiliar, expedientillo o acumulado cuando aparecen en la publicación.</li>
-                <li><strong>Identificación de la fecha de audiencia.</strong> Localiza y muestra la fecha de audiencia señalada en la notificación.</li>
-                <li><strong>Identificación de la fecha de publicación.</strong> Presenta la fecha exacta del Diario Oficial revisado.</li>
-                <li><strong>Identificación de la página.</strong> Indica el número de página del PDF donde se encontró la coincidencia.</li>
-                <li><strong>Identificación del archivo revisado.</strong> Muestra el nombre del PDF del Diario Oficial en el que se localizó el resultado.</li>
-                <li><strong>Generación de extractos de la notificación.</strong> Presenta un fragmento amplio del texto relacionado para facilitar su revisión jurídica.</li>
-            </ol>
+      <button class="cat" onclick="abrir('interfaz')">
+        <div class="ico">🖥️</div>
+        <h3>Interfaz</h3>
+        <p>Diseño sencillo, claro y fácil de usar.</p>
+        <span class="flecha">Ver más →</span>
+      </button>
+    </div>
 
-            <h3 class="subsection-title">🗂️ Historial y gestión de resultados</h3>
-            <ol class="numbered-list">
-                <li><strong>Historial de ejecuciones.</strong> Conserva un registro de las búsquedas realizadas, con fecha, hora, Diario revisado, coincidencias y estado del correo.</li>
-                <li><strong>Consulta de detalles del historial.</strong> Permite seleccionar una ejecución anterior y revisar nuevamente todos sus resultados.</li>
-                <li><strong>Eliminación individual del historial.</strong> El usuario puede seleccionar y eliminar únicamente el registro que desee, sin borrar el resto.</li>
-                <li><strong>Conservación local de resultados.</strong> Los resultados permanecen guardados en la computadora para consultarlos posteriormente.</li>
-                <li><strong>Generación de historial en PDF.</strong> Permite guardar los resultados o el historial en formato PDF.</li>
-                <li><strong>Impresión de resultados.</strong> Los documentos generados pueden abrirse e imprimirse cuando sea necesario.</li>
-            </ol>
-
-            <h3 class="subsection-title">✉️ Correo electrónico</h3>
-            <ol class="numbered-list">
-                <li><strong>Configuración opcional de correo.</strong> El programa funciona normalmente aunque el usuario no configure una cuenta de correo.</li>
-                <li><strong>Compatibilidad con Gmail.</strong> Permite configurar cuentas de Gmail mediante contraseña de aplicación.</li>
-                <li><strong>Compatibilidad con Outlook y Hotmail.</strong> Incluye configuración automática e instrucciones para utilizar estos proveedores.</li>
-                <li><strong>Guardado independiente del correo remitente.</strong> El botón Guardar remitente conserva únicamente la cuenta, el proveedor y la contraseña de aplicación.</li>
-                <li><strong>Administración independiente de destinatarios.</strong> Los destinatarios se agregan, eliminan y guardan mediante sus propios botones.</li>
-                <li><strong>Envío a varios destinatarios.</strong> Los resultados pueden enviarse automáticamente a todas las direcciones registradas.</li>
-                <li><strong>Envío de correo de prueba.</strong> Permite comprobar que el remitente, la contraseña y el servidor estén configurados correctamente.</li>
-                <li><strong>Eliminación completa del correo remitente.</strong> El botón Eliminar correo remitente borra la cuenta, la contraseña guardada y los destinatarios asociados.</li>
-                <li><strong>Almacenamiento seguro de la contraseña.</strong> La contraseña del correo se guarda mediante las Credenciales de Windows y no como texto visible dentro del programa.</li>
-                <li><strong>Funcionamiento sin correo.</strong> Cuando el correo no está configurado, la búsqueda se realiza y los resultados se conservan en el historial.</li>
-            </ol>
-
-            <h3 class="subsection-title">📅 Calendario y legislación</h3>
-            <ol class="numbered-list">
-                <li><strong>Calendario judicial.</strong> Abre el calendario de suspensión de labores en el navegador sin descargarlo automáticamente.</li>
-                <li><strong>Consulta de Legislación de Yucatán.</strong> Incluye Constitución Política, leyes, códigos y reglamentos expedidos por el Congreso del Estado.</li>
-                <li><strong>Búsqueda general dentro de la legislación.</strong> El buscador revisa simultáneamente las cuatro secciones para localizar una disposición.</li>
-                <li><strong>Visualización de información legislativa.</strong> Muestra decreto, fecha de publicación, última reforma, estado y disponibilidad del PDF.</li>
-                <li><strong>Eliminación de registros legislativos duplicados.</strong> Detecta títulos similares y conserva el registro oficial más completo.</li>
-                <li><strong>Apertura del PDF oficial de una ley.</strong> Permite abrir directamente el documento publicado por el Congreso cuando el enlace está disponible.</li>
-                <li><strong>Acceso a la página oficial de legislación.</strong> El usuario puede abrir la sección correspondiente del Congreso para realizar consultas adicionales.</li>
-                <li><strong>Acceso al catálogo oficial.</strong> Incluye un botón para entrar directamente al catálogo completo de disposiciones.</li>
-                <li><strong>Respaldo cuando no existe enlace directo al PDF.</strong> Si el portal no proporciona el vínculo, abre el catálogo oficial y copia el nombre de la disposición para facilitar la búsqueda.</li>
-            </ol>
-
-            <h3 class="subsection-title">🧰 Herramientas complementarias</h3>
-            <ol class="numbered-list">
-                <li><strong>Bonus Pack o Kit Jurídico.</strong> Abre una página con formatos, modelos y recursos jurídicos complementarios.</li>
-                <li><strong>Página de funciones completas.</strong> El logotipo de la pantalla principal abre una guía en línea con la explicación detallada del programa.</li>
-                <li><strong>Sección de créditos.</strong> Incluye un acceso visible a la información de autoría y desarrollo.</li>
-                <li><strong>Ventana Acerca de.</strong> Presenta información general sobre el programa, su finalidad y sus características.</li>
-            </ol>
-
-            <h3 class="subsection-title">🔐 Instalación, privacidad y seguridad</h3>
-            <ol class="numbered-list">
-                <li><strong>Sistema de activación por licencia.</strong> Solicita una licencia válida para habilitar el uso del programa en cada computadora.</li>
-                <li><strong>Instalación independiente.</strong> El usuario no necesita instalar Python, Visual Studio Code ni otras herramientas de desarrollo.</li>
-                <li><strong>Instalador limpio.</strong> Se distribuye sin nombres, historial, correos, contraseñas, licencias, expedientes ni PDF de otros usuarios.</li>
-                <li><strong>Privacidad local.</strong> Los nombres, expedientes, resultados, historial y configuraciones permanecen en la computadora del usuario.</li>
-                <li><strong>Sin recopilación de información personal.</strong> El programa no recopila ni envía datos del usuario a servidores propios.</li>
-                <li><strong>Control del usuario sobre sus datos.</strong> La información solo se comparte cuando el usuario decide enviarla, exportarla, imprimirla o copiarla.</li>
-                <li><strong>Actualización externa de contenidos.</strong> El calendario, el Bonus Pack y la página de funciones pueden actualizarse en GitHub sin modificar el instalador.</li>
-            </ol>
-
-            <h3 class="subsection-title">🖥️ Interfaz</h3>
-            <ol class="numbered-list">
-                <li><strong>Interfaz sencilla y organizada.</strong> Las funciones principales se encuentran separadas en botones y ventanas claramente identificadas.</li>
-                <li><strong>Estado de la búsqueda en pantalla.</strong> Muestra si el programa está listo, cuántos criterios están activos, cuántos expedientes se encuentran configurados y el estado del PDF.</li>
-                <li><strong>Mensajes claros de finalización.</strong> Informa si la búsqueda terminó correctamente, si encontró coincidencias y si el correo fue enviado o no estaba configurado.</li>
-            </ol>
-        </div>
-
-    </main>
+    <div class="contacto-cta">
+      <div class="linea-deco"></div>
+      <h4>¿Tienes dudas o quieres más información?</h4>
+      <p>Con gusto te atendemos por WhatsApp o correo.</p>
+      <a class="btn-contacto" href="https://hcomputo.github.io/Contacto/" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+        Contáctanos
+      </a>
+    </div>
 
     <footer class="footer">
-        <p><strong>DOF Buscador</strong> · Guía de Funciones</p>
-        <p style="margin-top: 0.4rem;">Material exclusivo para usuarios del programa</p>
+      <p><strong>DOF Buscador</strong> · Guía de Funciones</p>
+      <p class="mini">Material exclusivo para usuarios del programa</p>
     </footer>
+  </div>
 
+  <!-- ================= DETALLES ================= -->
+
+  <!-- ACERCA -->
+  <section class="detalle" id="acerca">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">📋</div><h2>Acerca del programa</h2></div>
+    <p class="detalle-intro">Todo lo que necesitas saber sobre qué es DOF Buscador, su finalidad y para quién fue creado.</p>
+
+    <div class="bloque">
+      <h3><span class="tag">📝</span> Descripción</h3>
+      <p>DOF Buscador es una herramienta diseñada para facilitar la consulta y revisión del Diario Oficial del Gobierno del Estado de Yucatán. El programa permite buscar nombres de personas, empresas, instituciones y números de expediente dentro de las publicaciones oficiales, evitando que tengas que revisar manualmente cada página del documento.</p>
+      <p>Sus búsquedas son 100% confiables: puedes localizar información por el nombre de tus clientes o, para mayor precisión, por número de expediente. Cada resultado se presenta de forma ordenada, mostrando la información más relevante de la publicación, como la autoridad que publica, el número de expediente, la fecha de audiencia, la fecha de publicación, la página del Diario Oficial y un extracto del texto relacionado.</p>
+      <p>Además, desde el propio programa puedes consultar y descargar cualquier ley, código, reglamento o decreto federal y estatal, así como revisar criterios de jurisprudencia y tesis necesarios para fundamentar correctamente tus demandas, contestaciones, recursos o cualquier otro escrito. Cuentas también con la herramienta de Expedientes, que concentra en un solo lugar la información que normalmente tendrías en tus archivos físicos, acceso a más de 10,000 formatos jurídicos organizados por categoría, y un calendario jurídico que te avisará en la fecha y hora exacta de tus citas y audiencias.</p>
+      <p><a class="inline" href="https://hcomputo.github.io/Instalador-dof-buscador/" target="_blank" rel="noopener">Da clic aquí para descargar e instalar</a>, si aún no lo has hecho.</p>
+    </div>
+
+    <div class="bloque">
+      <h3><span class="tag">🎯</span> Finalidad</h3>
+      <p>La finalidad de DOF Buscador es ayudar a identificar oportunamente publicaciones judiciales y administrativas que puedan ser relevantes para ti.</p>
+      <p>El programa busca reducir el tiempo dedicado a revisar extensos documentos en formato PDF, disminuir el riesgo de pasar por alto una publicación importante y facilitar el seguimiento de expedientes, personas o asuntos jurídicos de interés. Los resultados pueden consultarse inmediatamente, guardarse en el historial, exportarse en PDF y compartirse cuando lo consideres necesario.</p>
+    </div>
+
+    <div class="bloque">
+      <h3><span class="tag">👥</span> ¿A quién está dirigido?</h3>
+      <ul class="simple">
+        <li>Abogados y despachos jurídicos</li>
+        <li>Pasantes y estudiantes de Derecho</li>
+        <li>Gestores y auxiliares jurídicos</li>
+        <li>Empresas que requieren dar seguimiento a procedimientos</li>
+        <li>Instituciones, asociaciones y profesionistas</li>
+        <li>Personas que necesitan revisar si su nombre o expediente aparece en el Diario Oficial</li>
+      </ul>
+      <p style="margin-top:14px;">No es necesario contar con conocimientos de programación. Su interfaz fue diseñada para que cualquier usuario pueda configurar sus criterios de búsqueda y usar las funciones principales de forma sencilla.</p>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section class="detalle" id="beneficios">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">✨</div><h2>Beneficios y ventajas</h2></div>
+    <p class="detalle-intro">Lo que ganas al usar DOF Buscador frente a la revisión manual del Diario Oficial.</p>
+
+    <div class="bloque">
+      <h3><span class="tag">✨</span> Beneficios</h3>
+      <p>DOF Buscador permite realizar en pocos minutos una revisión que manualmente podría requerir mucho más tiempo. Puedes registrar nombres o números de expediente y dejar que el programa localice las coincidencias dentro del Diario Oficial.</p>
+      <p>Entre sus principales beneficios se encuentran la rapidez de búsqueda, la presentación inmediata de resultados, la conservación del historial y la posibilidad de consultar nuevamente las publicaciones encontradas sin repetir todo el proceso. También permite búsquedas históricas por fecha, identificar datos relevantes dentro de cada publicación y conservar un registro organizado de las revisiones.</p>
+    </div>
+
+    <div class="bloque">
+      <h3><span class="tag">⚡</span> Ventajas</h3>
+      <p>Una de sus principales ventajas es que no se limita a localizar una palabra aislada. Su sistema de búsqueda fue reforzado para reconocer nombres, apellidos, denominaciones y números de expediente dentro de distintos formatos de publicación.</p>
+      <p>Los resultados se presentan de manera clara y estructurada, indicando:</p>
+      <ul class="simple">
+        <li>Coincidencia encontrada</li>
+        <li>Personas relacionadas</li>
+        <li>Autoridad que publica</li>
+        <li>Número de expediente</li>
+        <li>Fecha de audiencia</li>
+        <li>Fecha de publicación</li>
+        <li>Página del Diario Oficial</li>
+        <li>Archivo revisado</li>
+        <li>Extracto de la notificación</li>
+      </ul>
+      <p style="margin-top:14px;">El programa también cuenta con historial de búsquedas, consulta de publicaciones anteriores, generación de documentos PDF, herramientas jurídicas complementarias y enlaces actualizables al calendario judicial, Bonus Pack y guía completa de funciones.</p>
+    </div>
+  </section>
+
+  <!-- BUSQUEDA -->
+  <section class="detalle" id="busqueda">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">🔎</div><h2>Búsqueda y criterios</h2></div>
+    <p class="detalle-intro">Todas las formas en que el programa localiza la información que necesitas.</p>
+    <ol class="fn">
+      <li><strong>Búsqueda del Diario Oficial del día.</strong> Descarga y revisa las ediciones disponibles del Diario Oficial correspondientes a la fecha actual.</li>
+      <li><strong>Búsqueda por fecha anterior.</strong> Selecciona una fecha específica para revisar publicaciones históricas.</li>
+      <li><strong>Búsqueda de nombres completos.</strong> Localiza nombres de personas dentro de las publicaciones, aun cuando aparezcan acompañados de otros nombres o datos jurídicos.</li>
+      <li><strong>Búsqueda por apellidos o partes del nombre.</strong> Configura criterios más breves, como uno o varios apellidos, para localizar posibles coincidencias.</li>
+      <li><strong>Búsqueda de empresas, instituciones y denominaciones.</strong> Busca nombres de bancos, sociedades, dependencias, asociaciones y otras personas morales.</li>
+      <li><strong>Búsqueda por número de expediente.</strong> Localiza expedientes dentro del Diario Oficial, incluyendo formatos como 450/2025 o 00819/2023.</li>
+      <li><strong>Búsqueda mediante varios criterios.</strong> Registra simultáneamente distintos nombres, empresas y expedientes para revisarlos en una sola ejecución.</li>
+      <li><strong>Administración de criterios de búsqueda.</strong> Agrega, consulta y elimina nombres o expedientes sin editar archivos manualmente.</li>
+      <li><strong>Detección reforzada de coincidencias.</strong> Considera diferencias de mayúsculas, minúsculas, acentos y distintos formatos de publicación.</li>
+      <li><strong>Revisión de varias ediciones de una misma fecha.</strong> Si el Diario Oficial publica más de una edición, el programa las revisa dentro del mismo proceso.</li>
+    </ol>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section class="detalle" id="resultados">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">📄</div><h2>Resultados e identificación</h2></div>
+    <p class="detalle-intro">Cada dato que el programa extrae y te muestra por cada coincidencia encontrada.</p>
+    <ol class="fn">
+      <li><strong>Presentación inmediata de resultados.</strong> Al terminar la búsqueda muestra directamente las coincidencias, sin obligarte a abrir otra sección.</li>
+      <li><strong>Identificación de la coincidencia localizada.</strong> Indica claramente qué nombre, denominación o expediente fue encontrado.</li>
+      <li><strong>Identificación de personas relacionadas.</strong> Muestra otros nombres que aparecen vinculados dentro del mismo extracto.</li>
+      <li><strong>Identificación de la autoridad que publica.</strong> Detecta el juzgado, tribunal, sala o autoridad responsable.</li>
+      <li><strong>Identificación del número de expediente.</strong> Extrae y presenta el expediente relacionado con la coincidencia.</li>
+      <li><strong>Detección de otros números judiciales.</strong> Identifica datos como toca, exhorto, amparo, expediente auxiliar, expedientillo o acumulado.</li>
+      <li><strong>Identificación de la fecha de audiencia.</strong> Localiza y muestra la fecha de audiencia señalada en la notificación.</li>
+      <li><strong>Identificación de la fecha de publicación.</strong> Presenta la fecha exacta del Diario Oficial revisado.</li>
+      <li><strong>Identificación de la página.</strong> Indica el número de página del PDF donde se encontró la coincidencia.</li>
+      <li><strong>Identificación del archivo revisado.</strong> Muestra el nombre del PDF del Diario Oficial en el que se localizó el resultado.</li>
+      <li><strong>Generación de extractos de la notificación.</strong> Presenta un fragmento amplio del texto relacionado para facilitar su revisión jurídica.</li>
+    </ol>
+  </section>
+
+  <!-- HISTORIAL -->
+  <section class="detalle" id="historial">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">🗂️</div><h2>Historial y gestión de resultados</h2></div>
+    <p class="detalle-intro">Guarda, vuelve a consultar, exporta e imprime todas tus búsquedas.</p>
+    <ol class="fn">
+      <li><strong>Historial de ejecuciones.</strong> Conserva un registro de las búsquedas realizadas, con fecha, hora, Diario revisado, coincidencias y estado del correo.</li>
+      <li><strong>Consulta de detalles del historial.</strong> Selecciona una ejecución anterior y revisa nuevamente todos sus resultados.</li>
+      <li><strong>Eliminación individual del historial.</strong> Elimina únicamente el registro que desees, sin borrar el resto.</li>
+      <li><strong>Conservación local de resultados.</strong> Los resultados permanecen guardados en la computadora para consultarlos después.</li>
+      <li><strong>Generación de historial en PDF.</strong> Guarda los resultados o el historial en formato PDF.</li>
+      <li><strong>Impresión de resultados.</strong> Los documentos generados pueden abrirse e imprimirse cuando sea necesario.</li>
+    </ol>
+  </section>
+
+  <!-- CORREO -->
+  <section class="detalle" id="correo">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">✉️</div><h2>Correo electrónico</h2></div>
+    <p class="detalle-intro">Envío automático de resultados por email. Totalmente opcional.</p>
+    <div class="nota"><strong>Es opcional:</strong> el programa funciona con normalidad aunque no configures ninguna cuenta de correo. Cuando lo usas, los datos se guardan localmente y solo se emplean para los envíos que tú solicites.</div>
+    <ol class="fn">
+      <li><strong>Configuración opcional de correo.</strong> El programa funciona normalmente aunque no configures una cuenta.</li>
+      <li><strong>Compatibilidad con Gmail.</strong> Permite configurar cuentas de Gmail mediante contraseña de aplicación.</li>
+      <li><strong>Compatibilidad con Outlook y Hotmail.</strong> Incluye configuración automática e instrucciones para estos proveedores.</li>
+      <li><strong>Guardado independiente del correo remitente.</strong> Conserva únicamente la cuenta, el proveedor y la contraseña de aplicación.</li>
+      <li><strong>Administración independiente de destinatarios.</strong> Los destinatarios se agregan, eliminan y guardan con sus propios botones.</li>
+      <li><strong>Envío a varios destinatarios.</strong> Los resultados pueden enviarse automáticamente a todas las direcciones registradas.</li>
+      <li><strong>Envío de correo de prueba.</strong> Comprueba que el remitente, la contraseña y el servidor estén bien configurados.</li>
+      <li><strong>Eliminación completa del correo remitente.</strong> Borra la cuenta, la contraseña guardada y los destinatarios asociados.</li>
+      <li><strong>Almacenamiento seguro de la contraseña.</strong> Se guarda mediante las Credenciales de Windows, no como texto visible dentro del programa.</li>
+      <li><strong>Funcionamiento sin correo.</strong> Cuando no está configurado, la búsqueda se realiza y los resultados se conservan en el historial.</li>
+    </ol>
+  </section>
+
+  <!-- LEGISLACION -->
+  <section class="detalle" id="legislacion">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">📅</div><h2>Calendario y legislación</h2></div>
+    <p class="detalle-intro">Leyes, códigos, reglamentos, jurisprudencia y el calendario judicial, todo desde el programa.</p>
+    <ol class="fn">
+      <li><strong>Calendario judicial.</strong> Abre el calendario de suspensión de labores en el navegador sin descargarlo automáticamente.</li>
+      <li><strong>Consulta de Legislación de Yucatán.</strong> Incluye Constitución Política, leyes, códigos y reglamentos expedidos por el Congreso del Estado.</li>
+      <li><strong>Búsqueda general dentro de la legislación.</strong> El buscador revisa simultáneamente las cuatro secciones para localizar una disposición.</li>
+      <li><strong>Visualización de información legislativa.</strong> Muestra decreto, fecha de publicación, última reforma, estado y disponibilidad del PDF.</li>
+      <li><strong>Eliminación de registros legislativos duplicados.</strong> Detecta títulos similares y conserva el registro oficial más completo.</li>
+      <li><strong>Apertura del PDF oficial de una ley.</strong> Abre directamente el documento publicado por el Congreso cuando el enlace está disponible.</li>
+      <li><strong>Acceso a la página oficial de legislación.</strong> Abre la sección correspondiente del Congreso para consultas adicionales.</li>
+      <li><strong>Acceso al catálogo oficial.</strong> Incluye un botón para entrar directamente al catálogo completo de disposiciones.</li>
+      <li><strong>Respaldo cuando no existe enlace directo al PDF.</strong> Si el portal no da el vínculo, abre el catálogo oficial y copia el nombre de la disposición para facilitar la búsqueda.</li>
+    </ol>
+  </section>
+
+  <!-- HERRAMIENTAS -->
+  <section class="detalle" id="herramientas">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">🧰</div><h2>Herramientas complementarias</h2></div>
+    <p class="detalle-intro">Recursos jurídicos extra que acompañan al programa.</p>
+    <ol class="fn">
+      <li><strong>Bonus Pack o Kit Jurídico.</strong> Abre una página con formatos, modelos y recursos jurídicos complementarios.</li>
+      <li><strong>Página de funciones completas.</strong> El logotipo de la pantalla principal abre esta guía en línea con la explicación detallada del programa.</li>
+      <li><strong>Sección de créditos.</strong> Incluye un acceso visible a la información de autoría y desarrollo.</li>
+      <li><strong>Ventana Acerca de.</strong> Presenta información general sobre el programa, su finalidad y características.</li>
+    </ol>
+  </section>
+
+  <!-- SEGURIDAD -->
+  <section class="detalle" id="seguridad">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">🔐</div><h2>Seguridad y privacidad</h2></div>
+    <p class="detalle-intro">Tus datos permanecen en tu propia computadora. Tú tienes el control.</p>
+
+    <div class="bloque">
+      <h3><span class="tag">🔒</span> Cómo protege tu información</h3>
+      <p>DOF Buscador funciona de manera local en tu computadora. El programa no recopila, registra ni envía información personal a servidores externos.</p>
+      <p>Los nombres configurados, expedientes, resultados, historial, documentos descargados y demás información generada permanecen almacenados en tu propia computadora. Estos datos solo se comparten cuando tú decides voluntariamente exportarlos, imprimirlos, enviarlos por correo o transferirlos.</p>
+      <p>La configuración de correo es opcional. Cuando se utiliza, los datos permanecen guardados localmente y se emplean únicamente para realizar los envíos que solicites. La versión distribuida se entrega limpia, sin nombres, historiales, correos, licencias ni documentos de otros usuarios.</p>
+    </div>
+
+    <div class="bloque">
+      <h3><span class="tag">🔐</span> Instalación, privacidad y seguridad</h3>
+      <ol class="fn">
+        <li><strong>Sistema de activación por licencia.</strong> Solicita una licencia válida para habilitar el uso en cada computadora.</li>
+        <li><strong>Instalación independiente.</strong> No necesitas instalar Python, Visual Studio Code ni otras herramientas de desarrollo.</li>
+        <li><strong>Instalador limpio.</strong> Se distribuye sin nombres, historial, correos, contraseñas, licencias, expedientes ni PDF de otros usuarios.</li>
+        <li><strong>Privacidad local.</strong> Nombres, expedientes, resultados, historial y configuraciones permanecen en tu computadora.</li>
+        <li><strong>Sin recopilación de información personal.</strong> El programa no recopila ni envía datos a servidores propios.</li>
+        <li><strong>Control del usuario sobre sus datos.</strong> La información solo se comparte cuando tú decides enviarla, exportarla, imprimirla o copiarla.</li>
+        <li><strong>Actualización externa de contenidos.</strong> El calendario, el Bonus Pack y la página de funciones pueden actualizarse sin modificar el instalador.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- INTERFAZ -->
+  <section class="detalle" id="interfaz">
+    <button class="volver" onclick="cerrar()">← Volver a las categorías</button>
+    <div class="detalle-head"><div class="ico-big">🖥️</div><h2>Interfaz</h2></div>
+    <p class="detalle-intro">Un diseño pensado para que cualquiera lo use sin complicaciones.</p>
+    <ol class="fn">
+      <li><strong>Interfaz sencilla y organizada.</strong> Las funciones principales están separadas en botones y ventanas claramente identificadas.</li>
+      <li><strong>Estado de la búsqueda en pantalla.</strong> Muestra si el programa está listo, cuántos criterios están activos, cuántos expedientes hay configurados y el estado del PDF.</li>
+      <li><strong>Mensajes claros de finalización.</strong> Informa si la búsqueda terminó correctamente, si encontró coincidencias y si el correo fue enviado o no estaba configurado.</li>
+    </ol>
+  </section>
+
+</div>
+
+<script>
+  function abrir(id) {
+    document.getElementById('inicio').style.display = 'none';
+    document.querySelectorAll('.detalle').forEach(function(s){ s.classList.remove('activa'); });
+    document.getElementById(id).classList.add('activa');
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+  function cerrar() {
+    document.querySelectorAll('.detalle').forEach(function(s){ s.classList.remove('activa'); });
+    document.getElementById('inicio').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+</script>
 </body>
 </html>
